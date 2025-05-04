@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
 // User Model
 const userSchema = new mongoose.Schema(
@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema(
     },
     lastName: {
       type: String,
-      required: true,
     },
     emailId: {
       type: String,
@@ -39,16 +38,14 @@ const userSchema = new mongoose.Schema(
     } ,
     age: {
       type: Number,
-      required: false,
       min: 18,
     },
     gender: {
       type: String,
       enum : {
-         values : ["male" , "female" , "others"],
+         values : ["male" , "female" , "other"],
          message : `{VALUE} is not a valid gender`
       },
-      required: false,
       trim: true,
       validate(value) {
         if (!["male", "female", "others","Male", "Female", "Others"].includes(value)) {
@@ -83,10 +80,10 @@ const userSchema = new mongoose.Schema(
 // if there are million of entries , findOne will take alot of time to search
 userSchema.index({ firstName: 1, lastName: 1 });
 
-userSchema.methods.getjwt = async function () {
+userSchema.methods.getJWT = async function () {
   const user = this;
-  const token = await jwt.sign({ _id: this._id }, "999@Akshad", {
-    expiresIn: "1d",
+  const token = await jwt.sign({ _id: user._id }, "DEV@Tinder$790", {
+    expiresIn: "7d",
   });
 
   return token;
@@ -102,5 +99,4 @@ userSchema.methods.validatePassword = async function (passwordInputByUser) {
   return isValidPassword;
 };
 
-mongoose.model("User", userSchema);
 module.exports = mongoose.model("User", userSchema);

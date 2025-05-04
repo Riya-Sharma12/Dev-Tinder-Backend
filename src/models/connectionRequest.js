@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 
 const connectionRequestSchema = new mongoose.Schema({
    fromUserId : {
-    type : mongoose.Schema.ObjectId,
+    type : mongoose.Schema.Types.ObjectId,
     ref : "User", // building relation bw two tables   
     required : true,
    },
    toUserId : {
-    type : mongoose.Schema.ObjectId,
+    type : mongoose.Schema.Types.ObjectId,
     ref: "User",
     required : true,
    },
@@ -16,7 +16,7 @@ const connectionRequestSchema = new mongoose.Schema({
      type : String,
      enum : {
         values : ["ignored" , "interested" , "accepted" , "rejected"],
-        message : `{values} is incorrect status type`
+        message : `{VALUE} is incorrect status type`
     },
     required : true,
    }
@@ -42,6 +42,4 @@ connectionRequestSchema.pre("save", function (next) {
 
 const ConnectionRequestModel = new mongoose.model("ConnectionRequest", connectionRequestSchema);
 
-module.exports = {
-   ConnectionRequestModel
-}
+module.exports = ConnectionRequestModel
