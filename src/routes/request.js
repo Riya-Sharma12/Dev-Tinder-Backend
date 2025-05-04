@@ -21,6 +21,7 @@ requestRouter.post(
    if(!toUser){
      return res.status(404).json({
       message : "User not found",
+      success: false,
      })
    }
    const allowedStatus = ["ignored","interested"];
@@ -49,11 +50,11 @@ requestRouter.post(
    });
 
    const data = await connectionRequest.save();
-   res.json({
-    message : req.user.firstName+"is "+status+"in "+ toUser.firstName,
-    data : data
+   res.status(200).json({
+    message : req.user.firstName+" is "+ status +" in "+ toUser.firstName,
+    data : data,
+    success: true,
    })
-
     } 
     catch (error) {
       res.status(400).json({
@@ -77,6 +78,7 @@ requestRouter.post(
       if(!allowedStatus.includes(status)){
         return res.status(400).json({
           message : "Invalid status or status not allowed",
+          success: false,
         })
       }
 
@@ -89,6 +91,7 @@ requestRouter.post(
       if(!connectionRequest){
         return res.status(404).json({
           message : "request not found",
+          success: false,
         })
       }
 
@@ -98,6 +101,7 @@ requestRouter.post(
       res.status(200).json({
         message: "Connection request " + status,
         data,
+        success: true,
       });
     } 
     catch (error) {

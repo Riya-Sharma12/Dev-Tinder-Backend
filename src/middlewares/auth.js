@@ -8,10 +8,10 @@
     const cookies = req.cookies;
     const {token} = cookies;
     if(!token){
-        throw new Error("Token not found in the cookies");  
+        res.status(401).send("Please Login or SignUp!") 
     }
 
-    const decodedObj = await jwt.verify(token, " dev@Tinder@1234");
+   const decodedObj = await jwt.verify(token, " dev@Tinder@1234");
    const {_id} = decodedObj;
    const user = await User.findById(_id);
    if(!user){

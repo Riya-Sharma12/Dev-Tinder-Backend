@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const connectionRequestSchema = new mongoose.Schema({
    fromUserId : {
     type : mongoose.Schema.ObjectId,
-    ref : "User", // builing relation bw two tables   
+    ref : "User", // building relation bw two tables   
     required : true,
    },
    toUserId : {
